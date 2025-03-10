@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: car
+  namespace: iot
+  labels:
+    app: car
+spec:
+  serviceName: car-service
+  replicas: 3
+  selector:
+    matchLabels:
+      app: car
+  template:
+    metadata:
+      labels:
+        app: car
+    spec:
+      containers:
+      - name: car
+        image: iot_workshop-car:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: 250m
+            memory: 500Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka-broker-0.kafka-broker.iot.svc.cluster.local:9092,kafka-broker-1.kafka-broker.iot.svc.cluster.local:9092"
+        - name: REDIS_HOST
+          value: "redis-service.iot.svc.cluster.local"
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: spv-installation
+  namespace: iot
+  labels:
+    app: spv-installation
+spec:
+  serviceName: installation-service
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spv-installation
+  template:
+    metadata:
+      labels:
+        app: spv-installation
+    spec:
+      containers:
+      - name: spv-installation
+        image: iot_workshop-spvc-installation:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: 250m
+            memory: 500Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka-broker-0.kafka-broker.iot.svc.cluster.local:9092,kafka-broker-1.kafka-broker.iot.svc.cluster.local:9092"
+        - name: REDIS_HOST
+          value: "redis-service.iot.svc.cluster.local"
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name

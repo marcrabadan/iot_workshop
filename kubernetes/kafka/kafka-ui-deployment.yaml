@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-ui
+  namespace: iot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-ui
+  template:
+    metadata:
+      labels:
+        app: kafka-ui
+    spec:
+      containers:
+      - name: kafka-ui
+        imagePullPolicy: Always
+        image: provectuslabs/kafka-ui:latest
+        ports:
+        - containerPort: 8080
+          name: client
+        env:
+        - name: KAFKA_CLUSTERS_0_NAME
+          value: "kafka-broker"
+        - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
+          value: "kafka-broker-0.kafka-broker.iot.svc.cluster.local:9092"
+        - name: KAFKA_CLUSTERS_0_READONLY
+          value: "true"

@@ -1,0 +1,2665 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-config
+  namespace: iot
+  labels:
+    app: grafana
+data:
+  cars-dashboard.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 1,
+      "links": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eeek788gx02yof"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 14,
+            "w": 21,
+            "x": 0,
+            "y": 0
+          },
+          "id": 3,
+          "options": {
+            "basemap": {
+              "config": {},
+              "name": "Layer 0",
+              "tooltip": false,
+              "type": "osm-standard"
+            },
+            "controls": {
+              "mouseWheelZoom": true,
+              "showAttribution": true,
+              "showDebug": false,
+              "showMeasure": false,
+              "showScale": false,
+              "showZoom": true
+            },
+            "layers": [
+              {
+                "config": {
+                  "arrow": 0,
+                  "style": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "lineWidth": 2,
+                    "opacity": 1,
+                    "rotation": {
+                      "fixed": 0,
+                      "max": 360,
+                      "min": -360,
+                      "mode": "mod"
+                    },
+                    "size": {
+                      "fixed": 5,
+                      "max": 15,
+                      "min": 2
+                    },
+                    "symbol": {
+                      "fixed": "img/icons/marker/circle.svg",
+                      "mode": "fixed"
+                    },
+                    "symbolAlign": {
+                      "horizontal": "center",
+                      "vertical": "center"
+                    },
+                    "textConfig": {
+                      "fontSize": 12,
+                      "offsetX": 0,
+                      "offsetY": 0,
+                      "textAlign": "center",
+                      "textBaseline": "middle"
+                    }
+                  }
+                },
+                "location": {
+                  "mode": "auto"
+                },
+                "name": "Layer 1",
+                "tooltip": true,
+                "type": "route"
+              }
+            ],
+            "tooltip": {
+              "mode": "details"
+            },
+            "view": {
+              "allLayers": false,
+              "id": "fit",
+              "lastOnly": true,
+              "lat": 0,
+              "layer": "Layer 1",
+              "lon": 0,
+              "shared": false,
+              "zoom": 18
+            }
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "car_latitude{device=\"$Cars\"}",
+              "format": "time_series",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "latitude",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "car_longitude{device=\"$Cars\"}",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "longitude",
+              "range": true,
+              "refId": "B",
+              "useBackend": false
+            }
+          ],
+          "title": "$Cars",
+          "transformations": [
+            {
+              "id": "joinByField",
+              "options": {
+                "byField": "Time",
+                "mode": "inner"
+              }
+            },
+            {
+              "id": "convertFieldType",
+              "options": {
+                "conversions": [
+                  {
+                    "destinationType": "number",
+                    "targetField": "latitude"
+                  },
+                  {
+                    "destinationType": "number",
+                    "targetField": "longitude"
+                  }
+                ],
+                "fields": {}
+              }
+            }
+          ],
+          "type": "geomap"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eeek788gx02yof"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "dark-red",
+                    "value": null
+                  },
+                  {
+                    "color": "dark-red",
+                    "value": 20
+                  },
+                  {
+                    "color": "dark-orange",
+                    "value": 21
+                  },
+                  {
+                    "color": "dark-green",
+                    "value": 51
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 21,
+            "y": 0
+          },
+          "id": 1,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "car_battery{device=\"$Cars\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Battery",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eeek788gx02yof"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 80
+                  },
+                  {
+                    "color": "dark-red",
+                    "value": 120
+                  }
+                ]
+              },
+              "unit": "velocitykmh"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 21,
+            "y": 4
+          },
+          "id": 2,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "car_speed{device=\"$Cars\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Speed",
+          "type": "gauge"
+        }
+      ],
+      "refresh": "5s",
+      "schemaVersion": 39,
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "current": {
+              "selected": false,
+              "text": "Mercedes Benz",
+              "value": "car-0"
+            },
+            "hide": 0,
+            "includeAll": false,
+            "multi": false,
+            "name": "Cars",
+            "options": [
+              {
+                "selected": true,
+                "text": "Mercedes Benz",
+                "value": "car-0"
+              },
+              {
+                "selected": false,
+                "text": "Citroen C3 Aircross",
+                "value": "car-1"
+              },
+              {
+                "selected": false,
+                "text": "BMX X3",
+                "value": "car-2"
+              }
+            ],
+            "query": "Mercedes Benz : car-0, Citroen C3 Aircross : car-1, BMX X3 : car-2",
+            "queryValue": "",
+            "skipUrlSync": false,
+            "type": "custom"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
+      "timeRangeUpdatedDuringEditOrView": false,
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "IoT - Cars Tracker",
+      "uid": "beek7tlg8ow00b",
+      "version": 6,
+      "weekStart": ""
+    }
+  dashboards.yaml: |
+    apiVersion: 1
+
+    providers:
+      - name: dashboards
+        orgId: 1
+        folder: ''
+        folderUid: ''
+        type: file
+        disableDeletion: false
+        updateInterruptible: true
+        allowUiUpdates: true
+        options:
+          path: /etc/grafana/provisioning/dashboards
+  datasources.yaml: |
+    apiVersion: 1
+
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        uid: eeek788gx02yof
+        access: proxy
+        url: http://prometheus-service.iot:9090
+        jsonData:
+          httpMethod: POST
+          manageAlerts: true
+          prometheusType: Prometheus
+          prometheusVersion: 2.44.0
+          cacheLevel: 'Low'
+          disableRecordingRules: false
+          incrementalQueryOverlapWindow: 10m
+  pv-installation-dashboard.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 2,
+      "links": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eeek788gx02yof"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "noValue": "-",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 16,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "id": 1,
+          "options": {
+            "infinitePan": false,
+            "inlineEditing": true,
+            "panZoom": false,
+            "root": {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "image": {
+                  "fixed": "https://www.svgrepo.com/download/274800/solar-energy-solar-panel.svg",
+                  "mode": "field"
+                }
+              },
+              "border": {
+                "color": {
+                  "fixed": "dark-green"
+                }
+              },
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "elements": [
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "transparent"
+                    },
+                    "image": {
+                      "fixed": "https://www.svgrepo.com/download/274800/solar-energy-solar-panel.svg"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 0,
+                    "width": 0
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "transparent"
+                    },
+                    "path": {
+                      "field": "",
+                      "fixed": "img/icons/unicons/arrow-up.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "Element 1",
+                  "placement": {
+                    "height": 100,
+                    "left": 271,
+                    "top": 13,
+                    "width": 100
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "field": "panels",
+                      "fixed": "#D9D9D9"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 25
+                  },
+                  "config": {
+                    "align": "center",
+                    "color": {
+                      "fixed": "#000000"
+                    },
+                    "size": 20,
+                    "text": {
+                      "field": "panels",
+                      "fixed": "",
+                      "mode": "field"
+                    },
+                    "valign": "middle"
+                  },
+                  "connections": [
+                    {
+                      "color": {
+                        "fixed": "rgb(204, 204, 220)"
+                      },
+                      "path": "straight",
+                      "size": {
+                        "fixed": 2,
+                        "max": 10,
+                        "min": 1
+                      },
+                      "source": {
+                        "x": 0,
+                        "y": -1
+                      },
+                      "sourceOriginal": {
+                        "x": 383,
+                        "y": 162
+                      },
+                      "target": {
+                        "x": 0,
+                        "y": 0.96
+                      },
+                      "targetName": "Element 7",
+                      "targetOriginal": {
+                        "x": 380,
+                        "y": 218
+                      }
+                    }
+                  ],
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "Element 2",
+                  "placement": {
+                    "height": 32,
+                    "left": 308,
+                    "top": 123,
+                    "width": 150
+                  },
+                  "type": "metric-value"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "transparent"
+                    },
+                    "image": {
+                      "fixed": "https://www.svgrepo.com/download/274795/electric-tower-energy.svg"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 0,
+                    "width": 0
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "transparent"
+                    },
+                    "path": {
+                      "field": "",
+                      "fixed": "img/icons/unicons/arrow-up.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "connections": [
+                    {
+                      "color": {
+                        "fixed": "rgb(204, 204, 220)"
+                      },
+                      "path": "straight",
+                      "size": {
+                        "fixed": 2,
+                        "max": 10,
+                        "min": 1
+                      },
+                      "source": {
+                        "x": 1,
+                        "y": -0.5
+                      },
+                      "sourceOriginal": {
+                        "x": 166,
+                        "y": 266
+                      },
+                      "target": {
+                        "x": -0.96,
+                        "y": 0.02
+                      },
+                      "targetName": "Element 7",
+                      "targetOriginal": {
+                        "x": 335,
+                        "y": 265
+                      }
+                    }
+                  ],
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "Element 3",
+                  "placement": {
+                    "height": 100,
+                    "left": 66,
+                    "top": 191,
+                    "width": 100
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "field": "battery",
+                      "fixed": "#D9D9D9"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 25
+                  },
+                  "config": {
+                    "align": "center",
+                    "color": {
+                      "fixed": "#000000"
+                    },
+                    "size": 20,
+                    "text": {
+                      "field": "battery",
+                      "fixed": "",
+                      "mode": "field"
+                    },
+                    "valign": "middle"
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "Element 4",
+                  "placement": {
+                    "height": 32,
+                    "left": 308,
+                    "top": 498,
+                    "width": 150
+                  },
+                  "type": "metric-value"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "transparent"
+                    },
+                    "image": {
+                      "fixed": "https://www.svgrepo.com/download/274809/low-battery.svg"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 0,
+                    "width": 0
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "transparent"
+                    },
+                    "path": {
+                      "field": "",
+                      "fixed": "img/icons/unicons/arrow-up.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "connections": [],
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "Element 5",
+                  "placement": {
+                    "height": 99,
+                    "left": 333,
+                    "top": 405,
+                    "width": 100
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "field": "grid",
+                      "fixed": "#D9D9D9"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 25
+                  },
+                  "config": {
+                    "align": "center",
+                    "color": {
+                      "fixed": "#000000"
+                    },
+                    "size": 20,
+                    "text": {
+                      "field": "grid",
+                      "fixed": "",
+                      "mode": "field"
+                    },
+                    "valign": "middle"
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "Element 6",
+                  "placement": {
+                    "height": 32,
+                    "left": 44,
+                    "top": 300,
+                    "width": 150
+                  },
+                  "type": "metric-value"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "transparent"
+                    },
+                    "image": {
+                      "fixed": "https://cdn-icons-png.freepik.com/512/8772/8772534.png"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 0,
+                    "width": 0
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "transparent"
+                    },
+                    "path": {
+                      "field": "",
+                      "fixed": "img/icons/unicons/arrow-up.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "connections": [
+                    {
+                      "color": {
+                        "fixed": "rgb(204, 204, 220)"
+                      },
+                      "path": "straight",
+                      "size": {
+                        "fixed": 2,
+                        "max": 10,
+                        "min": 1
+                      },
+                      "source": {
+                        "x": 0,
+                        "y": -1
+                      },
+                      "sourceOriginal": {
+                        "x": 383,
+                        "y": 316
+                      },
+                      "target": {
+                        "x": -0.02,
+                        "y": 1.02020202020202
+                      },
+                      "targetName": "Element 5",
+                      "targetOriginal": {
+                        "x": 376,
+                        "y": 400
+                      }
+                    },
+                    {
+                      "color": {
+                        "fixed": "rgb(204, 204, 220)"
+                      },
+                      "path": "straight",
+                      "size": {
+                        "fixed": 2,
+                        "max": 10,
+                        "min": 1
+                      },
+                      "source": {
+                        "x": 1,
+                        "y": 0
+                      },
+                      "sourceOriginal": {
+                        "x": 433,
+                        "y": 266
+                      },
+                      "target": {
+                        "x": -1.02,
+                        "y": -0.5
+                      },
+                      "targetName": "Element 8",
+                      "targetOriginal": {
+                        "x": 623,
+                        "y": 270
+                      }
+                    }
+                  ],
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "Element 7",
+                  "placement": {
+                    "height": 100,
+                    "left": 333,
+                    "top": 218,
+                    "width": 100
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "transparent"
+                    },
+                    "image": {
+                      "fixed": "https://cdn-icons-png.flaticon.com/512/2820/2820757.png"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 0,
+                    "width": 0
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "transparent"
+                    },
+                    "path": {
+                      "field": "",
+                      "fixed": "img/icons/unicons/arrow-up.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "Element 8",
+                  "placement": {
+                    "height": 100,
+                    "left": 624,
+                    "top": 195,
+                    "width": 100
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "field": "home",
+                      "fixed": "#D9D9D9"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 25
+                  },
+                  "config": {
+                    "align": "center",
+                    "color": {
+                      "fixed": "#000000"
+                    },
+                    "size": 20,
+                    "text": {
+                      "field": "home",
+                      "fixed": "",
+                      "mode": "field"
+                    },
+                    "valign": "middle"
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "Element 9",
+                  "placement": {
+                    "height": 32,
+                    "left": 592,
+                    "top": 305,
+                    "width": 150
+                  },
+                  "type": "metric-value"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "transparent"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    }
+                  },
+                  "config": {
+                    "rpm": {
+                      "field": "wind_rpm",
+                      "fixed": 0,
+                      "mode": "mod"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "Element 10",
+                  "placement": {
+                    "height": 110,
+                    "left": 391,
+                    "top": 13,
+                    "width": 67
+                  },
+                  "type": "windTurbine"
+                }
+              ],
+              "name": "Element 1740906682795",
+              "placement": {
+                "height": 100,
+                "left": 0,
+                "rotation": 0,
+                "top": 0,
+                "width": 100
+              },
+              "type": "frame"
+            },
+            "showAdvancedTypes": true
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "grid{device=\"$Homes\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "home{device=\"$Homes\"}",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "B",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "panels{device=\"$Homes\"}",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "C",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "battery{device=\"$Homes\"}",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "D",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "battery{device=\"$Homes\"}",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "E",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "wind_rpm{device=\"$Homes\"}",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "wind_rpm",
+              "range": true,
+              "refId": "F",
+              "useBackend": false
+            }
+          ],
+          "title": "Energy Distribution",
+          "transformations": [
+            {
+              "id": "joinByField",
+              "options": {
+                "byField": "Time",
+                "mode": "inner"
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "includeByName": {},
+                "indexByName": {},
+                "renameByName": {
+                  "{__name__=\"battery\", device=\"spv-installation-0\", instance=\"spv-installation-service.iot.svc.cluster.local:8000\", job=\"spv-installation\"}": "battery",
+                  "{__name__=\"grid\", device=\"spv-installation-0\", instance=\"spv-installation-service.iot.svc.cluster.local:8000\", job=\"spv-installation\"}": "grid",
+                  "{__name__=\"home\", device=\"spv-installation-0\", instance=\"spv-installation-service.iot.svc.cluster.local:8000\", job=\"spv-installation\"}": "home",
+                  "{__name__=\"inverter_current\", device=\"spv-installation-0\", instance=\"spv-installation-service.iot.svc.cluster.local:8000\", job=\"spv-installation\"}": "inverter_current",
+                  "{__name__=\"inverter_power\", device=\"spv-installation-0\", instance=\"spv-installation-service.iot.svc.cluster.local:8000\", job=\"spv-installation\"}": "inverter_current",
+                  "{__name__=\"inverter_voltage\", device=\"spv-installation-0\", instance=\"spv-installation-service.iot.svc.cluster.local:8000\", job=\"spv-installation\"}": "inverter_voltage",
+                  "{__name__=\"panels\", device=\"spv-installation-0\", instance=\"spv-installation-service.iot.svc.cluster.local:8000\", job=\"spv-installation\"}": "panels"
+                }
+              }
+            }
+          ],
+          "type": "canvas"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eeek788gx02yof"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 12,
+            "y": 0
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "home{device=\"$Homes\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "Home",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Home consumption",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eeek788gx02yof"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 0
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "battery{device=\"$Homes\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "Battery",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Battery",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eeek788gx02yof"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 12,
+            "y": 8
+          },
+          "id": 4,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "panels{device=\"$Homes\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "Solar Panels",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Panels",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eeek788gx02yof"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 8
+          },
+          "id": 3,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "grid{device=\"$Homes\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "Grid",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Grid",
+          "type": "timeseries"
+        }
+      ],
+      "refresh": "5s",
+      "schemaVersion": 39,
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "current": {
+              "selected": false,
+              "text": "Malaga",
+              "value": "spv-installation-0"
+            },
+            "hide": 0,
+            "includeAll": false,
+            "multi": false,
+            "name": "Homes",
+            "options": [
+              {
+                "selected": true,
+                "text": "Malaga",
+                "value": "spv-installation-0"
+              },
+              {
+                "selected": false,
+                "text": "Barcelona",
+                "value": "spv-installation-1"
+              },
+              {
+                "selected": false,
+                "text": "Mallorca",
+                "value": "spv-installation-2"
+              }
+            ],
+            "query": "Malaga : spv-installation-0, Barcelona : spv-installation-1, Mallorca : spv-installation-2",
+            "queryValue": "",
+            "skipUrlSync": false,
+            "type": "custom"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
+      "timeRangeUpdatedDuringEditOrView": false,
+      "timepicker": {
+        "refresh_intervals": [
+          "5s",
+          "10s",
+          "30s",
+          "1m",
+          "5m",
+          "15m",
+          "30m",
+          "1h",
+          "2h",
+          "1d"
+        ]
+      },
+      "timezone": "browser",
+      "title": "IoT - Renewable Energy",
+      "uid": "feemalr97pedcd",
+      "version": 9,
+      "weekStart": ""
+    }
+  smart-home-dashboard.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 3,
+      "links": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "eeek788gx02yof"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*_temp/"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "celsius"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*_humidity/"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "humidity"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*_light/"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "bool_on_off"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/.*_energy/"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "kwatth"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 17,
+            "w": 18,
+            "x": 0,
+            "y": 0
+          },
+          "id": 1,
+          "options": {
+            "infinitePan": false,
+            "inlineEditing": false,
+            "panZoom": false,
+            "root": {
+              "background": {
+                "color": {
+                  "fixed": "transparent"
+                },
+                "image": {
+                  "fixed": "https://www.livehome3d.com/assets/img/articles/how-to-draw-a-floor-plan/floor-plan-of-a-house-with-a-pool.jpg"
+                },
+                "size": "fill"
+              },
+              "border": {
+                "color": {
+                  "fixed": "dark-green"
+                },
+                "width": 0
+              },
+              "constraint": {
+                "horizontal": "left",
+                "vertical": "top"
+              },
+              "elements": [
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "connections": [],
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "living_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 642,
+                    "top": 137,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "dining_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 805,
+                    "top": 137,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "kitchen_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 937,
+                    "top": 128,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "wine_cellar_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 1049,
+                    "top": 137,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "hall_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 937,
+                    "top": 208,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "guest_bath_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 1077,
+                    "top": 227,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "guest_bedroom_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 1041,
+                    "top": 315,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "patio_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 721,
+                    "top": 419,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "terrace_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 533,
+                    "top": 448,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "bath_ligtht",
+                  "placement": {
+                    "height": 38,
+                    "left": 346,
+                    "top": 467,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "gym_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 301,
+                    "top": 334,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "garage_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 31,
+                    "top": 515,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "#ffffff"
+                    },
+                    "image": {
+                      "mode": "fixed"
+                    },
+                    "size": "cover"
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "#2c2e2c"
+                    },
+                    "radius": 57,
+                    "width": 3
+                  },
+                  "config": {
+                    "fill": {
+                      "fixed": "dark-orange"
+                    },
+                    "path": {
+                      "fixed": "img/icons/unicons/lightbulb-alt.svg",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "laundry_light",
+                  "placement": {
+                    "height": 38,
+                    "left": 364,
+                    "top": 32,
+                    "width": 36
+                  },
+                  "type": "icon"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "light-orange"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-orange"
+                    },
+                    "radius": 55,
+                    "width": 2
+                  },
+                  "config": {
+                    "align": "center",
+                    "color": {
+                      "fixed": "#000000"
+                    },
+                    "size": 14,
+                    "text": {
+                      "field": "laundry_humidity",
+                      "fixed": "",
+                      "mode": "field"
+                    },
+                    "valign": "middle"
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "laundry_humidity",
+                  "placement": {
+                    "height": 30,
+                    "left": 246,
+                    "top": 79,
+                    "width": 90
+                  },
+                  "type": "metric-value"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "light-orange"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-orange"
+                    },
+                    "radius": 55,
+                    "width": 2
+                  },
+                  "config": {
+                    "align": "center",
+                    "color": {
+                      "fixed": "#000000"
+                    },
+                    "size": 14,
+                    "text": {
+                      "field": "laundry_energy",
+                      "fixed": "",
+                      "mode": "field"
+                    },
+                    "valign": "middle"
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "laundry_energy",
+                  "placement": {
+                    "height": 30,
+                    "left": 346,
+                    "top": 79,
+                    "width": 90
+                  },
+                  "type": "metric-value"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "light-orange"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-orange"
+                    },
+                    "radius": 55,
+                    "width": 2
+                  },
+                  "config": {
+                    "align": "center",
+                    "color": {
+                      "fixed": "#000000"
+                    },
+                    "size": 14,
+                    "text": {
+                      "field": "laundry_temp",
+                      "fixed": "",
+                      "mode": "field"
+                    },
+                    "valign": "middle"
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "laundry_temp",
+                  "placement": {
+                    "height": 30,
+                    "left": 443,
+                    "top": 79,
+                    "width": 90
+                  },
+                  "type": "metric-value"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "light-orange"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-orange"
+                    },
+                    "radius": 55,
+                    "width": 2
+                  },
+                  "config": {
+                    "align": "center",
+                    "color": {
+                      "fixed": "#000000"
+                    },
+                    "size": 14,
+                    "text": {
+                      "field": "laundry_light",
+                      "fixed": "",
+                      "mode": "field"
+                    },
+                    "valign": "middle"
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "laundry_switch",
+                  "placement": {
+                    "height": 30,
+                    "left": 540,
+                    "top": 79,
+                    "width": 90
+                  },
+                  "type": "metric-value"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "transparent"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 0,
+                    "width": 0
+                  },
+                  "config": {
+                    "align": "center",
+                    "api": {
+                      "contentType": "application/json",
+                      "data": "{\n\"device_id\": \"smarthome-0\",\n\"room_id\": \"laundry\",\n\"value\": \"False\"\n}",
+                      "endpoint": "http://api-service.iot.svc.cluster.local:8000/api/telemetry",
+                      "headerParams": [],
+                      "method": "POST",
+                      "queryParams": []
+                    },
+                    "color": {
+                      "fixed": "#F0F4FD"
+                    },
+                    "size": 14,
+                    "style": {
+                      "variant": "primary"
+                    },
+                    "text": {
+                      "fixed": "Off",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "laundry_light_off",
+                  "placement": {
+                    "height": 38,
+                    "left": 498,
+                    "top": 32,
+                    "width": 71
+                  },
+                  "type": "button"
+                },
+                {
+                  "background": {
+                    "color": {
+                      "fixed": "transparent"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    },
+                    "radius": 0,
+                    "width": 0
+                  },
+                  "config": {
+                    "align": "center",
+                    "api": {
+                      "contentType": "application/json",
+                      "data": "{\n\"device_id\": \"smarthome-0\",\n\"room_id\": \"laundry\",\n\"value\": true\n}",
+                      "endpoint": "http://api-0.api-service.iot.svc.cluster.local:8000/api/telemetry",
+                      "headerParams": [],
+                      "method": "POST",
+                      "queryParams": []
+                    },
+                    "color": {
+                      "fixed": "#F0F4FD"
+                    },
+                    "size": 14,
+                    "style": {
+                      "variant": "primary"
+                    },
+                    "text": {
+                      "fixed": "On",
+                      "mode": "fixed"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "name": "laundry_light_on",
+                  "placement": {
+                    "height": 38,
+                    "left": 417,
+                    "top": 32,
+                    "width": 71
+                  },
+                  "type": "button"
+                }
+              ],
+              "name": "Element 1740926945484",
+              "placement": {
+                "height": 100,
+                "left": 0,
+                "rotation": 0,
+                "top": 0,
+                "width": 100
+              },
+              "type": "frame"
+            },
+            "showAdvancedTypes": true
+          },
+          "pluginVersion": "11.0.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "smart_home_temperature{device=\"smarthome-0\", room=\"laundry\"}",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "smart_home_humidity{device=\"smarthome-0\", room=\"laundry\"}",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "B",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "smart_home_light{device=\"smarthome-0\", room=\"laundry\"}",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "C",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "eeek788gx02yof"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "smart_home_energy{device=\"smarthome-0\", room=\"laundry\"}",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "D",
+              "useBackend": false
+            }
+          ],
+          "title": "Panel Title",
+          "transformations": [
+            {
+              "id": "joinByField",
+              "options": {
+                "byField": "Time",
+                "mode": "inner"
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "includeByName": {},
+                "indexByName": {},
+                "renameByName": {
+                  "{__name__=\"smart_home_energy\", device=\"smarthome-0\", instance=\"smart-home-service.iot.svc.cluster.local:8000\", job=\"smart-home\", room=\"laundry\"}": "laundry_energy",
+                  "{__name__=\"smart_home_humidity\", device=\"smarthome-0\", instance=\"smart-home-service.iot.svc.cluster.local:8000\", job=\"smart-home\", room=\"laundry\"}": "laundry_humidity",
+                  "{__name__=\"smart_home_light\", device=\"smarthome-0\", instance=\"smart-home-service.iot.svc.cluster.local:8000\", job=\"smart-home\", room=\"laundry\"}": "laundry_light",
+                  "{__name__=\"smart_home_temperature\", device=\"smarthome-0\", instance=\"smart-home-service.iot.svc.cluster.local:8000\", job=\"smart-home\", room=\"laundry\"}": "laundry_temp"
+                }
+              }
+            }
+          ],
+          "type": "canvas"
+        }
+      ],
+      "refresh": "5s",
+      "schemaVersion": 39,
+      "tags": [],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
+      "timeRangeUpdatedDuringEditOrView": false,
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "IoT - Smart Home",
+      "uid": "eeen76ezec5c0d",
+      "version": 7,
+      "weekStart": ""
+    }

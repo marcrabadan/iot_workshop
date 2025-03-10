@@ -1,0 +1,19 @@
+services:
+  car:
+    build:
+      context: ./things/car/
+      dockerfile: Dockerfile
+    env_file:
+      - .env.local
+  smart_home:
+    build:
+      context: ./things/smart_home/
+      dockerfile: Dockerfile
+    env_file:
+      - .env.local
+  spvc-installation :
+    build:
+      context: ./things/spvc-installation/
+      dockerfile: Dockerfile
+    env_file:
+      - .env.local
